@@ -1,9 +1,9 @@
-#TREX library to submit dTRE data to TREX nodes
-This is a library to pack up decentralized timed-release encrpytion (dTRE) data and send it to TREX nodes.
+# TREX library to submit dTRE data to TREX nodes
+This is a library to pack up decentralized timed-release encrpytion (dTRE) data as a form of blockchain extrinsics and send it to TREX nodes.
 
 This library could be integrated with any frontend web applications or rust-based backend servers to submit dTRE data to the TREX network.
 
-### Create a subxt API
+### Create a TREX subxt API
 We will be creating a rust app to submit dTRE data. So, to create a rust app follow the following steps in the terminal. First, you need to get your system ready. So install some packages to begin.
 
 #### 1.create an application app for rust.
