@@ -6,12 +6,41 @@ use subxt::{
 };
 
 use serde::{Deserialize, Serialize};
+use subxt::rpc::{ClientT, rpc_params};
 
 #[subxt::subxt(runtime_metadata_path = "metadata.scale")]
 pub mod trex_node {}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tracing_subscriber::fmt::init();
+
+    let api = OnlineClient::<PolkadotConfig>::new().await?;
+
+    let params = rpc_params![];
+
+    let block_hash = api.rpc().block(None).await?;
+    if let Some(hash) = block_hash {
+        println!("Best block hash: {:?}",hash);
+    } else {
+        println!("Best block hash not found.");
+    }
+
+    let avg_block_time: Option<u32> =
+        api.rpc().client.request("difficulty_getAvgBlockTime", params).await?;
+
+    if let Some(block_time) = avg_block_time {
+        println!("Average Block Time: {:?}",block_time);
+    } else {
+        println!("Average Block Time not found.");
+    }
+    send_ciphers().await?;
+
+    Ok(())
+}
+
+// #[tokio::main]
+async fn send_ciphers() -> Result<(), Box<dyn std::error::Error>> {
     env_logger::init();
 
     let account_id = AccountKeyring::Alice.to_account_id().into();
